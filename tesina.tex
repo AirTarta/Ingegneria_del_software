@@ -24,18 +24,59 @@
 \chapter{Descrizione Progetto}
 \label{ch:descrizione}
 
+Il progetto consiste nella realizzazione di un sistema gestionale desktop dedicato alle palestre. L'obiettivo principale è quello di digitalizzare e semplificare i processi amministrativi, riducendo gli errori legati alla gestione manuale e offrendo ai clienti un servizio maggiormente personalizzato.
+
+Il software permette di coordinare in un'unica piattaforma le attività delle tre figure principali della struttura: l'Amministratore, che ha il controllo totale sulla contabilità e sulle statistiche, gli Allenatori, che gestiscono i corsi e le schede di allenamento, e i Clienti.
+
+Rispetto a un gestionale standard, il sistema presenta alcune particolarità pensate per le esigenze specifiche delle strutture sportive:
+
+\begin{itemize}
+    \item \textbf{Architettura leggera e portatile:} Il sistema non richiede l'installazione di un database relazionale pesante, ma garantisce la persistenza dei dati attraverso la lettura e scrittura su file Excel o file binari.
+    \item \textbf{Sospensione intelligente degli abbonamenti:} I clienti hanno la possibilità di richiedere la sospensione temporanea della loro sottoscrizione; il sistema calcola e posticipa automaticamente la nuova data di scadenza.
+    \item \textbf{Gestione anti-sovraffollamento:} Ogni corso prevede un limite massimo di capienza. Il sistema verifica in tempo reale le iscrizioni per impedire che venga superato il numero consentito di partecipanti.
+    \item \textbf{Automazione delle manutenzioni e avvisi:} Il gestionale include funzioni automatizzate che verificano quotidianamente gli abbonamenti scaduti, aggiornando lo stato dei clienti e generando avvisi automatici. Inoltre, dispone di una procedura integrata per il backup di sicurezza di tutti i dati.
+\end{itemize}
+
 %--------------------------------------------------
 \chapter{Glossario dei Termini}
 \label{ch:glossario}
 
+Di seguito il glossario dei termini utilizzati all'interno del progetto, comprensivo di descrizione, tipologia e relativi sinonimi.
+
 \begin{table}[H]
 \centering
-\begin{tabular}{llll}
-\toprule
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{|p{3.8cm}|p{5.3cm}|p{1.8cm}|p{3.2cm}|}
+\hline
 Termine & Descrizione & Tipo & Sinonimi \\
-\midrule
- &  &  &  \\
-\bottomrule
+\hline
+\textbf{Cliente} & Colui che fruisce dei servizi offerti dalla palestra, previa registrazione e abbonamento. & Business & Iscritto, Utente \\
+\hline
+\textbf{Amministratore} & Gestore della struttura. Ha accesso a tutti i dati, gestisce le ricevute e visualizza le statistiche. & Business & Cassiere, Segreteria \\
+\hline
+\textbf{Allenatore} & Dipendente tecnico della struttura, ha il compito di gestire i corsi e redigere le schede di allenamento. & Business & Personal Trainer, Coach \\
+\hline
+\textbf{Abbonamento} & Sottoscrizione temporale (es. mensile, annuale) che permette al cliente di accedere alla palestra e iscriversi ai corsi. & Business & Iscrizione \\
+\hline
+\textbf{Sospensione} & Azione che permette di mettere in pausa un abbonamento attivo, posticipandone la data di scadenza. & Business & Congelamento \\
+\hline
+\textbf{Corso} & Attività sportiva organizzata, caratterizzata da un calendario, un allenatore responsabile e un limite massimo di iscritti. & Business & Classe, Lezione \\
+\hline
+\textbf{Scheda di allenamento} & Piano di esercizi personalizzato, creato dall'allenatore per un singolo cliente, con una durata prestabilita in settimane. & Business & Programma di allenamento \\
+\hline
+\textbf{Turno} & Pianificazione della disponibilità settimanale di un allenatore (giorno, orario inizio, orario fine). & Business & Orario di lavoro \\
+\hline
+\textbf{Ricevuta} & Documento che attesta l'avvenuto pagamento di un abbonamento, riportante data e importo. & Business & Fattura, Scontrino \\
+\hline
+\textbf{Avviso} & Messaggio generato dal sistema, dall'amministratore o dall'allenatore per notificare il cliente (es. scadenza abbonamento). & Business & Notifica \\
+\hline
+\textbf{Backup} & Copia di sicurezza dei file di salvataggio (Excel/Binari) contenenti i dati del sistema. & Tecnico & Salvataggio dati \\
+\hline
+\textbf{Statistiche} & Sintesi e aggregazione dei dati di sistema atta ad analizzare l'andamento complessivo della palestra. & Business & Report \\
+\hline
+\textbf{Utilizzatore} & Chi usa il sistema software (Amministratore, Allenatore o Cliente). & Tecnico & Account \\
+\hline
+\hline
 \end{tabular}
 \end{table}
 
@@ -45,20 +86,96 @@ Termine & Descrizione & Tipo & Sinonimi \\
 
 \section{Requisiti Funzionali}
 
+\subsection{Area: Gestione Anagrafica}
+
+\noindent\textbf{RF1: Gestione scheda cliente}\\
+Il sistema dovrà consentire al personale di creare, modificare e conservare nel tempo la scheda personale di ogni cliente, comprensiva di dati anagrafici, recapiti di contatto e fotografia.\\
+\\
+\noindent\textbf{RF2: Archivio documenti e consensi}\\
+Il sistema dovrà offrire uno spazio dedicato all'archivio digitale di liberatorie, contratti di iscrizione e moduli di consenso.\\
+\\
+\noindent\textbf{RF3: Monitoraggio certificato medico}\\
+Il sistema dovrà tracciare la scadenza del certificato medico di ogni iscritto, inviando avvisi in caso di prossima scadenza o di mancato rinnovo.\\
+\\
+\subsection{Area: Abbonamenti}
+
+\noindent\textbf{RF4: Configurazione tipologie di abbonamento}\\
+Il sistema dovrà permettere di configurare liberamente le diverse tipologie di abbonamento offerte.\\
+\\
+\noindent\textbf{RF5: Promemoria scadenza abbonamento}\\
+Il sistema dovrà monitorare costantemente ogni abbonamento attivo, inviando un promemoria al cliente in prossimità della scadenza.\\
+\\
+\noindent\textbf{RF6: Congelamento abbonamento}\\
+Il sistema dovrà essere in grado di congelare l'abbonamento di un cliente (ad esempio in caso di malattia).\\
+\\
+\subsection{Area: Prenotazione Corsi}
+
+\noindent\textbf{RF7: Calendario delle lezioni}\\
+Il sistema dovrà mettere a disposizione un calendario aggiornato di tutte le lezioni dei corsi extra-sala pesi, con indicazione degli orari.\\
+\\
+\noindent\textbf{RF8: Prenotazione del posto a lezione}\\
+Il sistema dovrà permettere a ogni cliente di prenotare il proprio posto nelle lezioni, nel rispetto del numero massimo di partecipanti previsto.\\
+\\
+\subsection{Area: Gestione Pagamenti}
+
+\noindent\textbf{RF9: Pagamento del cliente}\\
+Il sistema dovrà permettere a ogni cliente di effettuare pagamenti.\\
+\\
+\noindent\textbf{RF10: Registrazione degli incassi}\\
+Il sistema dovrà permettere di registrare ogni incasso di qualsiasi tipo di vendita.\\
+\\
+\noindent\textbf{RF11: Generazione di ricevute e fatture}\\
+Il sistema dovrà generare automaticamente, per ogni transazione, la relativa ricevuta o fattura elettronica.\\
+\\
+\noindent\textbf{RF12: Solleciti per pagamenti non riusciti}\\
+Il sistema dovrà essere in grado di inviare solleciti in caso di pagamenti non andati a buon fine.\\
+\\
+\noindent\textbf{RF13: Report mensile degli incassi}\\
+Il sistema dovrà rendere disponibile ogni mese il report mensile degli incassi, per dare visione sull'andamento economico della palestra.\\
+\\
+\subsection{Area: Staff}
+
+\noindent\textbf{RF14: Gestione anagrafica dello staff}\\
+Il sistema dovrà conservare i dati anagrafici di ciascun membro dello staff, insieme alle qualifiche professionali possedute.\\
+\\
+\noindent\textbf{RF15: Orari e compiti giornalieri dello staff}\\
+Il sistema dovrà fornire a ogni membro dello staff il suo orario di lavoro e il suo compito giornaliero (sala pesi, corso di Hyrox, corso di pilates, ecc.).\\
+\\
+\subsection{Area: Area Personale}
+
+\noindent\textbf{RF16: Scheda personale del cliente}\\
+Il sistema dovrà permettere all'istruttore di creare la scheda personale del cliente e a quest'ultimo di accedervi.\\
+\\
+\noindent\textbf{RF17: Piani alimentari personalizzati}\\
+Laddove la palestra offra questo servizio, il sistema dovrà supportare la definizione e la condivisione di piani alimentari personalizzati, integrati con il resto del percorso di allenamento.\\
+\\
+\subsection{Area: Portale Cliente}
+
+\noindent\textbf{RF18: Prenotazione autonoma dei corsi}\\
+Il sistema dovrà permettere al cliente di consultare il calendario delle attività e di prenotare autonomamente la propria partecipazione ai corsi.\\
+\\
+\noindent\textbf{RF19: Consultazione dello stato dell'abbonamento}\\
+Il sistema dovrà mostrare in modo chiaro lo stato dell'abbonamento in corso, la relativa data di scadenza ed eventuali documenti collegati, come il certificato medico.\\
+\\
+\noindent\textbf{RF20: Notifiche automatiche al cliente}\\
+Il sistema dovrà inviare notifiche automatiche al cliente per ricordare lezioni prenotate, scadenze imminenti o comunicazioni importanti da parte della palestra.\\
+\\
+
+
 \section{Requisiti Non Funzionali}
-RNF1: Implementazione in Python 3 \\
+\noindent\textbf{RNF1: Implementazione in Python 3}\\
 Il sistema dovrà essere implementato in linguaggio Python 3.\\
 \\
-RNF2: Utilizzo di un database relazionale (SQLite) \\
+\noindent\textbf{RNF2: Utilizzo di un database relazionale (SQLite)}\\
 Il sistema dovrà utilizzare un database relazionale per il salvataggio dei dati.\\
 \\
-RNF3: Implementazione grafica\\
+\noindent\textbf{RNF3: Implementazione grafica}\\
 Il sistema dovrà implementare un'interfaccia grafica in PyQt6.\\
 \\
-RNF4: Password solo hashate\\ 
+\noindent\textbf{RNF4: Password solo hashate}\\ 
 Le password non dovranno essere visualizzabili in chiaro ma solo sotto forma di hashcode.\\
 \\
-RNF5: Interfaccia User-Friendly\\
+\noindent\textbf{RNF5: Interfaccia User-Friendly}\\
 L'interfaccia dovrà essere completamente in italiano, i messaggi di errore chiari, in modo che un utente abituato a gestionali base non necessiterà di nessun tipo di formazione per usare l'app.\\
 \\
 
